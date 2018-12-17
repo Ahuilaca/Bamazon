@@ -1,4 +1,4 @@
-// Use NPM packages
+// Use NPM packages=====================================
 var inquirer = require("inquirer");
 var mysql = require("mysql");
 
@@ -18,7 +18,7 @@ connection.connect(function (err) {
 
 });
 
-// Displays items for sale===========================
+// Displays items for sale===============================
 var createTable = function () {
     connection.query("SELECT * FROM products", function (err, res) {
         for (var i = 0; i < res.length; i++) {
@@ -29,7 +29,7 @@ var createTable = function () {
     })
 }
 
-// Place orders here
+// Place orders here======================================
 var purchasePrompt = function () {
     console.log("--~~Place your Order Here!~~--");
     inquirer.prompt([
@@ -40,7 +40,8 @@ var purchasePrompt = function () {
         },
         {
             type: "input",
-            name: "stock_quantity",
+            //name: "stock_quantity",
+            name: "quantity",
             message: "How many would you like to purchase?"
 
 
@@ -48,7 +49,8 @@ var purchasePrompt = function () {
             var item = input.product_name;
             //var quantity = input.quantity;
             var quantity = input.products;
-            // To confirm item ID exists in the desired quantity
+
+            // To confirm item exists in the desired quantity
             var Selection = "SELECT * FROM products WHERE ?";
 
             connection.query(Selection, { product_name: item }, function (err, data) {
@@ -56,7 +58,8 @@ var purchasePrompt = function () {
                 if (data.length === 0) {
                     console.log("Sorry, we do not carry that item. Please make another selection.");
 
-                    //fix from here
+
+                    // Fix from here
                 } else {
                     //var productInfo = data[0];
                     var itemInfo = data;
@@ -78,9 +81,8 @@ var purchasePrompt = function () {
                             //connection.end();
                         })
                     } else {
-                        console.log("Sorry, there is not enough product in stock, your order can not be placed.");
-                        console.log('Please decrease the number of items purchased.');
-                        console.log("-----------------------------------");
+                        console.log("Sorry, due to low inventory your order cannot be completed at this time.");
+                        //                         console.log("-----------------------------------");
                     }
                 }
             })
