@@ -40,14 +40,12 @@ var purchasePrompt = function () {
         },
         {
             type: "input",
-            //name: "stock_quantity",
             name: "quantity",
             message: "How many would you like to purchase?"
 
 
         }]).then(function (input) {
             var item = input.product_name;
-            //var quantity = input.quantity;
             var quantity = input.products;
 
             // To confirm item exists in the desired quantity
@@ -63,6 +61,7 @@ var purchasePrompt = function () {
                 } else {
                     //var productInfo = data[0];
                     var itemInfo = data;
+
                     // If the quantity requested is in stock
                     if (quantity <= itemInfo.stock_quantity) {
                         console.log("Your order has been placed.");
@@ -77,12 +76,10 @@ var purchasePrompt = function () {
                             console.log("Thank you for your order! Your total is $" + itemInfo.price * quantity);
                             console.log("-----------------------------------");
 
-                            // End the database connection
-                            //connection.end();
                         })
                     } else {
                         console.log("Sorry, due to low inventory your order cannot be completed at this time.");
-                        //                         console.log("-----------------------------------");
+                        console.log("-----------------------------------");
                     }
                 }
             })
